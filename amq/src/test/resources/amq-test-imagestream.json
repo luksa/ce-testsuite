@@ -1,0 +1,22 @@
+{
+  "kind": "ImageStream",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "jboss-amq-62"
+  },
+  "spec": {
+    "dockerImageRepository": "ce-os-registry.usersys.redhat.com:5000/alesj/amq62-openshift",
+    "tags": [
+      {
+        "name": "1.2",
+        "annotations": {
+          "description": "JBoss A-MQ 6.2 broker image.",
+          "iconClass": "icon-jboss",
+          "tags": "messaging,amq,jboss,xpaas",
+          "supports": "amq:6.2,messaging,xpaas:1.2",
+          "version": "1.2"
+        }
+      }
+    ]
+  }
+}

@@ -30,6 +30,7 @@ import java.io.IOException;
 import org.jboss.arquillian.ce.api.OpenShiftHandle;
 import org.jboss.arquillian.ce.api.OpenShiftResource;
 import org.jboss.arquillian.ce.api.OpenShiftResources;
+import org.jboss.arquillian.ce.api.Replicas;
 import org.jboss.arquillian.ce.api.RoleBinding;
 import org.jboss.arquillian.ce.api.Template;
 import org.jboss.arquillian.ce.api.TemplateParameter;
@@ -54,11 +55,14 @@ import org.junit.runner.RunWith;
         @TemplateParameter(name = "APPLICATION_NAME", value = "amq-test"),
         @TemplateParameter(name = "MQ_USERNAME", value = "${amq.username:amq-test}"),
         @TemplateParameter(name = "MQ_PASSWORD", value = "${amq.password:redhat}"),
-        @TemplateParameter(name = "MQ_PROTOCOL", value = "openwire,amqp,mqtt,stomp")})
+        @TemplateParameter(name = "MQ_PROTOCOL", value = "openwire,amqp,mqtt,stomp"),
+        @TemplateParameter(name = "IMAGE_STREAM_NAMESPACE", value = "${kubernetes.namespace}")})
 @RoleBinding(roleRefName = "view", userName = "system:serviceaccount:${kubernetes.namespace}:default")
 @OpenShiftResources({
-    @OpenShiftResource("classpath:testrunner-claim.json")
+    @OpenShiftResource("classpath:testrunner-claim.json"),
+    @OpenShiftResource("classpath:amq-test-imagestream.json")
 })
+@Replicas(2)
 public class AmqScaleTest extends AmqTestBase {
 
     private String openWireMessage = "Arquillian test - Persistent OpenWire";
